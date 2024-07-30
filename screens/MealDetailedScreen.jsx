@@ -2,6 +2,8 @@ import { Image } from "expo-image";
 import { useLayoutEffect } from "react";
 import { StyleSheet, Text, View } from "react-native"
 import { MealsDetails } from "../components/MealsDetails";
+import { Subtitle } from "../components/MealDetail/Subtitle";
+import { List } from "../components/MealDetail/List";
 
 
 export const MealDetailedScreen = ( {route, navigation } ) => {
@@ -42,13 +44,11 @@ export const MealDetailedScreen = ( {route, navigation } ) => {
       </View>
 
       <View style={ styles.subtitleContainer }>
-          <Text style={ styles.subtitle }>Ingredients</Text>
+        <Subtitle>Ingredients</Subtitle>
       </View>
-         { ingredients.map( ingredient => <Text key={ingredient}>{ingredient}</Text>)}
-      <View style={ styles.subtitleContainer }>
-          <Text style={ styles.subtitle }>Steps</Text>
-      </View>
-          { steps.map( step => <Text key={step}>{step}</Text>)}
+         <List data={ingredients}/>
+          <Subtitle>Steps</Subtitle>
+          <List data={ steps }/>
     </View>
   )
 }
@@ -69,19 +69,6 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       color: 'white'
     },
-    subtitle: {
-      color: '#E2B497',
-      fontSize: 18,
-      fontWeight: 'bold',
-      textAlign: 'center',
-    },
-    subtitleContainer: {
-      borderBottomWidth: 2,
-      borderBottomColor: 'white',
-      marginHorizontal: 24,
-      marginVertical: 4,
-      margin: 4,
-      padding: 6,
-    }
+    
 
 })

@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     margin: 16,
     height: 150,
     elevation: 4,
-    backgroundColor: Platform.OS === 'ios' ? white : null,
+    backgroundColor: Platform.OS === 'ios' ? 'white' : null,
     shadowColor: 'black',
     shadowOpacity: 0.25,
     shadowOffset: { width: 0, height: 2},
