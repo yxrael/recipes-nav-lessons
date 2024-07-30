@@ -4,7 +4,7 @@ import { Platform, Pressable, StyleSheet, Text, View } from "react-native"
 
 
 
-export const CategoryGridTile = ({ id, title, color, onPress }) => {
+export const CategoryGridTile = ({ title, color, onPress }) => {
 
  
 
