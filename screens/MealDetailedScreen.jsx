@@ -1,14 +1,18 @@
 import { Image } from "expo-image";
-import { useLayoutEffect } from "react";
-import { StyleSheet, Text, View } from "react-native"
+import { useLayoutEffect, useState } from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native"
 import { MealsDetails } from "../components/MealsDetails";
 import { Subtitle } from "../components/MealDetail/Subtitle";
 import { List } from "../components/MealDetail/List";
 
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { MEALS } from "../data/dummy-data";
+
 
 export const MealDetailedScreen = ( {route, navigation } ) => {
 
-    const { 
+    const {
+        id,
         imageUrl, 
         title,
         duration,
@@ -19,18 +23,45 @@ export const MealDetailedScreen = ( {route, navigation } ) => {
         isLactoseFree,
         isVegan,
         isVegetarian,
-        steps
+        steps,
+        isFavorite
       } = route.params.item;
 
+      const [meGusta, setmeGusta] = useState(isFavorite)
+      const muestra = MEALS.find( comida => comida.id === id );
 
-      // useLayoutEffect(() => {
-      //   navigation.setOptions({
-      //     title
-      //   });
-      // }, [title, navigation])
+      const headerButtonPressHandler = () => {
+        setmeGusta( !meGusta )
+        muestra.isFavorite = !muestra.isFavorite;
+      }
+
+      const Botoncico = () => {
+
+        return (
+          <View style={styles.corazon}>
+            <Ionicons name=
+            {
+              !meGusta ? 'heart-outline' : 'heart'
+            }
+             size={32}
+             color="#c71717"
+             onPress={ headerButtonPressHandler }
+             />
+          </View>
+        )
+      }
+
+      useLayoutEffect(() => {
+        navigation.setOptions({
+          title,
+          headerRight: () => {
+            return <Botoncico />
+          }
+        });
+      }, [navigation, headerButtonPressHandler])
 
   return (
-    <View style={ styles.container }>
+    <ScrollView style={ styles.rootContainer }>
       <Image source={ imageUrl } style={ styles.image}/>
       <Text style={styles.title}>{title}</Text>
       <View>
@@ -43,19 +74,25 @@ export const MealDetailedScreen = ( {route, navigation } ) => {
           />
       </View>
 
-      <View style={ styles.subtitleContainer }>
-        <Subtitle>Ingredients</Subtitle>
+      <View style={ styles.listOuterContainer }>
+          <View style={ styles.listContainer }>
+              <Subtitle>Ingredients</Subtitle>
+              <List data={ingredients}/>
+              <Subtitle>Steps</Subtitle>
+              <List data={ steps }/>
+          </View>
       </View>
-         <List data={ingredients}/>
-          <Subtitle>Steps</Subtitle>
-          <List data={ steps }/>
-    </View>
+    </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
+    rootContainer: {
+      marginBottom: 32
+    },
     container: {
-        flex: 1,
+        // flex: 1,
+        marginBottom: 50,
         // backgroundColor: '#dbb8a4'
     },
     image: {
@@ -69,6 +106,18 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       color: 'white'
     },
+    listContainer: {
+      width: '80%',
+      height: 350,
+    },
+    listOuterContainer: {
+      alignItems: 'center',
+      paddingBottom: 200
+    },
+    corazon: {
+      alignContent: 'center',
+      justifyContent: 'center'
+    }
     
 
 })

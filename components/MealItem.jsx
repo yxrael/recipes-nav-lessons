@@ -10,10 +10,11 @@ export const MealItem = ({ navigation, item }) => {
     title,
     duration,
     complexity,
-    affordability
+    affordability,
+    isFavorite
   } = item;
 
- 
+ console.log(isFavorite)
 
   const pressHandler = () => {
     navigation.navigate('MealDetailedScreen', { item });
